@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import Tasks from '../tasks';
-import AddTask from '../add-task';
+
+// services
 import localstorageService from '../../services/localstorage.service';
+
+//components
+import Actions from '../actions';
+import AddTask from '../add-task';
+import Tasks from '../tasks';
 
 export class Content extends Component {
   state = {
@@ -42,20 +47,37 @@ export class Content extends Component {
       isImportant: false,
       isDone: false,
       comment: '',
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString()
+      created_at: new Date().toLocaleString(),
+      updated_at: new Date().toLocaleString()
     };
     const tasks = [...this.state.tasks, task];
 
     this.setState({ tasks });
     localstorageService.setData(tasks);
   };
+  handleToggleAllStatus = status => {
+    const tasks = this.state.tasks;
+
+    tasks.map(task => (task.isDone = status));
+    this.setState({ tasks });
+  };
+  handleDeleteAll = () => {
+    this.setState({ tasks: [] });
+    localstorageService.clear();
+  };
   render() {
+    const { tasks } = this.state;
     return (
       <div className="content">
         <AddTask OnAddTask={this.handleAddTask} />
+        {tasks.length > 0 && (
+          <Actions
+            onToggleAllStatus={this.handleToggleAllStatus}
+            onDeleteAll={this.handleDeleteAll}
+          />
+        )}
         <Tasks
-          tasks={this.state.tasks}
+          tasks={tasks}
           onDelete={this.handleDelete}
           onDone={this.handleDone}
         ></Tasks>

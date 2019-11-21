@@ -1,8 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Task = props => {
-  const { task, onDelete, onDone } = props;
+//components
+import DoneButton from '../buttons/done';
+import DeleteButton from '../buttons/delete';
 
+const Task = ({ task, onDelete, onDone }) => {
   const checkState = task => {
     if (task.isDone) {
       return { textDecoration: 'line-through' };
@@ -17,14 +20,12 @@ const Task = props => {
         <p style={checkState(task)}>{task.text}</p>
       </div>
       <div className="task__actions">
-        {
-          <button className="task__btn" onClick={() => onDone(task)}>
-            {task.isDone ? 'un-done' : 'Done'}
-          </button>
-        }
-        <button className="task__btn" onClick={() => onDelete(task.id)}>
-          Delete
-        </button>
+        <DoneButton task={task} onDone={onDone}></DoneButton>
+        <DeleteButton task={task} onDelete={onDelete} />
+
+        <Link to={`/task/${task.id}`} className="task__btn">
+          Edit
+        </Link>
       </div>
     </div>
   );

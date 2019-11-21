@@ -1,4 +1,4 @@
-const name = 'task';
+const name = 'tasks';
 
 function setData(data) {
   localStorage.setItem(name, JSON.stringify(data));
