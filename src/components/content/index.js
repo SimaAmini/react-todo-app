@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import Tasks from '../tasks';
 import AddTask from '../add-task';
+import localstorageService from '../../services/localstorage.service';
 
 export class Content extends Component {
   state = {
     tasks: []
   };
+  componentDidMount() {
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    const tasks = localstorageService.getData();
+
+    this.setState({ tasks: tasks ? tasks : [] });
+  }
   handleDone = task => {
     const tasks = [...this.state.tasks];
     const index = tasks.indexOf(task);
@@ -13,6 +23,7 @@ export class Content extends Component {
     tasks[index].isDone = !tasks[index].isDone;
 
     this.setState({ tasks });
+    localstorageService.setData(tasks);
   };
 
   handleDelete = id => {
@@ -20,6 +31,7 @@ export class Content extends Component {
     const clean_tasks = tasks.filter(task => task.id !== id);
 
     this.setState({ tasks: clean_tasks });
+    localstorageService.setData(clean_tasks);
   };
 
   handleAddTask = text => {
@@ -36,6 +48,7 @@ export class Content extends Component {
     const tasks = [...this.state.tasks, task];
 
     this.setState({ tasks });
+    localstorageService.setData(tasks);
   };
   render() {
     return (
