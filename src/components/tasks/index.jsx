@@ -1,8 +1,9 @@
 import React from 'react';
+
+//components
 import Task from '../task';
 
-const Tasks = props => {
-  const { tasks, onDelete, onDone } = props;
+const Tasks = ({ tasks, onDelete, onDone }) => {
   return (
     <div>
       {tasks &&
