@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="footer">
       <div>
         <a
-          href=""
+          href="https://github.com/SimaAmini/react-todo-app"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="View source on Github"
