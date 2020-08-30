@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export class AddTask extends Component {
-  state = {
-    text: ''
-  };
-  handleSubmit = event => {
+export function AddTask(props) {
+  const [text, setText] = useState('');
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.props.OnAddTask(this.state.text);
-    this.setState({ text: '' });
+    props.OnAddTask(text);
+    setText('');
   };
-  handleChange = e => {
-    let text = { ...this.state.text };
-    text = e.currentTarget.value;
-    this.setState({ text });
+  const handleChange = (e) => {
+    let value = { ...text };
+    value = e.currentTarget.value;
+    setText(value);
   };
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            className="main-input"
-            value={this.state.text}
-            name="text"
-            type="text"
-            onChange={this.handleChange}
-          />
-        </form>
-      </div>
-    );
-  }
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          className="main-input"
+          value={text}
+          name="text"
+          type="text"
+          onChange={handleChange}
+        />
+      </form>
+    </div>
+  );
 }
 
 export default AddTask;
