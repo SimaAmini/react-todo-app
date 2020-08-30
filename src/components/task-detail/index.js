@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import localstorageService from '../../services/localstorage.service';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 import DoneButton from '../buttons/done';
 import DeleteButton from '../buttons/delete';
 
